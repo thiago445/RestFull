@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -78,9 +79,12 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	@JsonIgnore
 	public List<Task> getTasks() {
 		return tasks;
 	}
+	
 	public void setTasks(List<Task> tasks) {
 		this.tasks = tasks;
 	}

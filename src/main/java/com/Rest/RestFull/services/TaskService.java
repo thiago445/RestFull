@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.Rest.RestFull.models.Task;
 import com.Rest.RestFull.models.User;
 import com.Rest.RestFull.repository.TaskRepository;
-import com.Rest.RestFull.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -18,9 +17,6 @@ public class TaskService {
 	
 	@Autowired
 	private TaskRepository taskRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
 	
 	@Autowired
 	private UserService userService;
