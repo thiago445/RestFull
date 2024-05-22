@@ -51,12 +51,13 @@ public class User {
 	
 	public User() {	
 	}
-//Construtor
+//CONSTRUTOR
 	public User(Long id,String username, String password){
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
+		
 	}
 	
 	//GETTERS IN SETTERS

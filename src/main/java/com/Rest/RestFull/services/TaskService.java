@@ -1,6 +1,7 @@
 package com.Rest.RestFull.
 services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class TaskService {
 	@Autowired
 	private UserService userService;
 	
+	
+	public List<Task>findAllById(Long userId){
+		List<Task> tasks = this.taskRepository.findByUser_Id(userId);
+		return tasks;
+	}
 	
 	public Task findById(Long id) {
 		Optional<Task>task = this.taskRepository.findById(id);
