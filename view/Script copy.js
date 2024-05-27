@@ -1,11 +1,11 @@
-const url="http://localhost:8080/task/user/2"
-const url1="http://localhost:8080/task/user/2"
+const url="http://localhost:8080/task/user/4"
+
 
 function hideLoader(){
     document.getElementById("loading").style.display= "none";
 }
 
-function show(tasks){
+function show(tasku){
     let tab = `<thead>
                     <th scope="col">Description Id </th>
                     <th scope="col"> Username</th>
@@ -13,7 +13,7 @@ function show(tasks){
                     <th scope="col"> User Id </th>
                  </thead>`;
 
-    for (let task of tasks) {
+    for (let task of tasku) {
         tab += `
             <tr>
                 <td scope="row">${task.id}</td>
@@ -25,7 +25,7 @@ function show(tasks){
         
     }
 
-    document.getElementById("tasks").innerHTML= tab;
+    document.getElementById("tasku").innerHTML= tab;
 }
 
 async function getAPI(url){

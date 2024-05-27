@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Rest.RestFull.models.User;
 import com.Rest.RestFull.repository.UserRepository;
+import com.Rest.RestFull.services.Exceptions.DataBindingViolationException;
+import com.Rest.RestFull.services.Exceptions.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -18,7 +20,7 @@ public class UserService {
 
 	public User findById(Long id) {
 		Optional<User>user = this.userRepository.findById(id);
-		return user.orElseThrow(() ->new RuntimeException(
+		return user.orElseThrow(() ->new ObjectNotFoundException(
 				"Usuario não encontrado! id: "+ id + ",tipo: "+ User.class.getName()));
 	}
 	
@@ -44,7 +46,7 @@ public class UserService {
 			this.userRepository.deleteById(id);
 			
 		} catch (Exception e) {
-			throw new RuntimeException("Não é possivel excluir pois há entidade relacionadas!");
+			throw new DataBindingViolationException("Não é possivel excluir pois há entidade relacionadas!");
 		}
 	}
 	
