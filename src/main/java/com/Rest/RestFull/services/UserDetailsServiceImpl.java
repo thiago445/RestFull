@@ -22,13 +22,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = this.userRepository.findByname(username);
+		
 		if(Objects.isNull(user)) {
 			throw new UsernameNotFoundException("Usuario nao encontrado: " +username);
-			return new UserSpringSecurity(user.getId(), user.getUsername(), user.getPassword(), user.getProfiles());
+		}
+			
+		return new UserSpringSecurity(user.getId(), user.getUsername(), user.getPassword(), user.getProfiles());
 			
 		}
 		// TODO Auto-generated method stub
-		return null  ;
 	}
 	
 	
