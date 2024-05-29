@@ -26,16 +26,16 @@ public class UserSpringSecurity implements UserDetails{
 	
 	public Collection<? extends GrantedAuthority> authorities; 
 	
-	public UserSpringSecurity(Long id, String username, String password,
-			Set<ProfileEnum> profileEnum) {
-		super();
+	public UserSpringSecurity(Long id, String username, String password,Set<ProfileEnum> profileEnums) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
-		this.authorities = profileEnum.stream().map(x -> new SimpleGrantedAuthority(x.getDescription())).collect(Collectors.toList());
+		this.authorities = profileEnums.stream().map(x -> new SimpleGrantedAuthority(x.getDescription())).collect(Collectors.toList());
 	}
 	
-
+	public boolean hasRole(ProfileEnum profileEnum) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(profileEnum.getDescription()));
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -61,9 +61,8 @@ public class UserSpringSecurity implements UserDetails{
 		return true;
 	}
 
-	public boolean hasRole(ProfileEnum profileEnum) {
-		return getAuthorities().contains(new SimpleGrantedAuthority(profileEnum.getDescription()));
-	}
 	
-	
+
+
+
 }
