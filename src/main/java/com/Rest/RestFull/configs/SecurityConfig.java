@@ -19,54 +19,48 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.Rest.RestFull.security.JWTAuthenticationFilter;
 import com.Rest.RestFull.security.JWTUtil;
-
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
-	private AuthenticationManager authenticationManager;
-	
-	@Autowired
-	private UserDetailsService userDetailsService;
-	
-	@Autowired
-	private PasswordEncoder bCryptPasswordEncoder;
-	
-	@Autowired 
-	private JWTUtil jwtUtil;
+
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired 
+    private JWTUtil jwtUtil;
 
     private static final String[] PUBLIC_MATCHERS = { "/" };
 
     private static final String[] PUBLIC_MATCHERS_POST = { "/user", "/login" };
-    
-    private static final String[] PUBLIC_MATCHERS_PUT = { "/user/{id}" };
-    
-    private static final String[] PUBLIC_MATCHERS_GET = { "/user/{id}" };
-
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
-        
+
         AuthenticationManagerBuilder authenticationManagerBuilder = http
-        	.getSharedObject(AuthenticationManagerBuilder.class);
+            .getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(this.userDetailsService)
-        	.passwordEncoder(bCryptPasswordEncoder);
+            .passwordEncoder(passwordEncoder());
         this.authenticationManager = authenticationManagerBuilder.build();
-            http.authorizeHttpRequests(authorizeRequests ->
+        http.authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
                     .requestMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-                    .requestMatchers(HttpMethod.PUT, PUBLIC_MATCHERS_PUT).permitAll()
-                    .requestMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
                     .requestMatchers(PUBLIC_MATCHERS).permitAll()
-                    .anyRequest().authenticated()
+                    .anyRequest().authenticated().and()
+                    .authenticationManager(authenticationManager)
+            
             )
+
             .sessionManagement(sessionManagement ->
                 sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             );
+        http.addFilter(new JWTAuthenticationFilter(this.authenticationManager, this.jwtUtil));
 
         return http.build();
     }
@@ -79,7 +73,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

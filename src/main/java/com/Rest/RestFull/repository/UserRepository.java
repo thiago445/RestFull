@@ -12,7 +12,7 @@ import com.Rest.RestFull.models.User;
 public interface UserRepository extends JpaRepository<User,Long>{
 	
 	@Transactional(readOnly = true)
-	User findByname(String username);
+	User findByUsername(String username);
 	
 
 

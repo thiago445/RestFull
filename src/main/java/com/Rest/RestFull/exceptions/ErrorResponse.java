@@ -46,6 +46,11 @@ public class ErrorResponse {
 		this.stackTrace = stackTrace;
 		this.errors = errors;
 	}
+
+	public String toJson() {
+		return "(\"status\": " + getStatus() + ", " + 
+				"\"message\": \"" + getMessage() + "\")";
+	}
 	
 
 	
