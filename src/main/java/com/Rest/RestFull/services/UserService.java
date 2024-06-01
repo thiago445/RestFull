@@ -38,6 +38,8 @@ public class UserService {
 		return user.orElseThrow(() -> new ObjectNotFoundException(
 				"Usuario não encontrado! id: " + id + ",tipo: " + User.class.getName()));
 	}
+	
+	
 
 	@Transactional
 	public User create(User obj) {
@@ -48,6 +50,7 @@ public class UserService {
 		return obj;
 
 	}
+	
 
 	@Transactional
 	public User update(User obj) {

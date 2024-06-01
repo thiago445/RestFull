@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.Rest.RestFull.models.Task;
 import com.Rest.RestFull.services.TaskService;
+import com.Rest.RestFull.services.UserService;
 
 import jakarta.validation.Valid;
 
@@ -28,6 +29,9 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 	
+	@Autowired
+	private UserService userService;	
+	
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Task> findById(@PathVariable Long id){
@@ -36,9 +40,9 @@ public class TaskController {
 		return ResponseEntity.ok(objs);
 	}
 	
-	@GetMapping("/user/{userId}")
-	public ResponseEntity<List<Task>> findAllById(@PathVariable Long userId){
-		List<Task> obj = this.taskService.findAllById(userId);
+	@GetMapping("/user")
+	public ResponseEntity<List<Task>> findAllByUser(){
+		List<Task> obj = this.taskService.findAllByUser();
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -64,6 +68,13 @@ public class TaskController {
 		this.taskService.delete(id);
 		return ResponseEntity.noContent().build();
 			
+	}
+	@GetMapping("/admin")
+	public ResponseEntity<List<Task>> findAll(){
+		List<Task> obj = this.taskService.findAll();
+		return ResponseEntity.ok().body(obj);
+		
+		
 	}
 	
 	
