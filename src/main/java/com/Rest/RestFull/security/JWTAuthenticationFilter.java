@@ -1,5 +1,6 @@
 package com.Rest.RestFull.security;
 
+import java.io.IOException;
 import java.rmi.ServerException;
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ import com.Rest.RestFull.exceptions.GlobalExceptionHandler;
 import com.Rest.RestFull.models.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.jsonwebtoken.io.IOException;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,8 +44,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			
 			Authentication authentication = this.authenticationManager.authenticate(authToken);
 			return authentication;
-		} catch (Exception e) {
-			throw new RuntimeException();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 	
