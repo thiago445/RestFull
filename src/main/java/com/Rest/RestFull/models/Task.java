@@ -12,8 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -32,8 +31,7 @@ public class Task {
 	
 	
 	@Column(name= "description", length = 255, nullable = false)
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	@Size(min=1, max= 255)
 	private String description;
 	

@@ -6,13 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.Rest.RestFull.models.Task;
+import com.Rest.RestFull.models.projection.TaskProjection;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task,Long> {
 
 	//SEM CODIGO SQL
 	
-	List<Task> findByUser_Id(Long id);
+	List<TaskProjection> findByUser_Id(Long id);
 	
 	//MEIO SQL
 	

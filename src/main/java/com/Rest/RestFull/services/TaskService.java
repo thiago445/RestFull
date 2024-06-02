@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.Rest.RestFull.models.ProfileEnum;
 import com.Rest.RestFull.models.Task;
 import com.Rest.RestFull.models.User;
+import com.Rest.RestFull.models.projection.TaskProjection;
 import com.Rest.RestFull.repository.TaskRepository;
 import com.Rest.RestFull.security.UserSpringSecurity;
 import com.Rest.RestFull.services.Exceptions.AuthorizationExeption;
@@ -26,14 +27,14 @@ public class TaskService {
 	@Autowired
 	private UserService userService;
 
-	public List<Task> findAllByUser() {
+	public List<TaskProjection> findAllByUser() {
 		UserSpringSecurity userSpringSecurity = UserService.authenticated();
 
 		if (Objects.isNull(userSpringSecurity)) {
 			throw new AuthorizationExeption("Acesso negado");
 		}
 
-		List<Task> tasks = this.taskRepository.findByUser_Id(userSpringSecurity.getId());
+		List<TaskProjection> tasks = this.taskRepository.findByUser_Id(userSpringSecurity.getId());
 		return tasks;
 	}
 

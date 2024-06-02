@@ -13,11 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Rest.RestFull.models.ProfileEnum;
 import com.Rest.RestFull.models.User;
+import com.Rest.RestFull.models.UserCreateDTO;
+import com.Rest.RestFull.models.UserUpdateDTO;
 import com.Rest.RestFull.repository.UserRepository;
 import com.Rest.RestFull.security.UserSpringSecurity;
 import com.Rest.RestFull.services.Exceptions.AuthorizationExeption;
 import com.Rest.RestFull.services.Exceptions.DataBindingViolationException;
 import com.Rest.RestFull.services.Exceptions.ObjectNotFoundException;
+
+import jakarta.validation.Valid;
 
 @Service
 public class UserService {
@@ -68,6 +72,19 @@ public class UserService {
 		} catch (Exception e) {
 			throw new DataBindingViolationException("Não é possivel excluir pois há entidade relacionadas!");
 		}
+	}
+	
+	public User fromDTO(@Valid UserCreateDTO obj) {
+		User user = new User();
+		user.setUsername(obj.getUsername());
+		user.setPassword(obj.getPassword());
+		return user;
+	}
+	public User fromDTO(@Valid UserUpdateDTO obj) {
+		User user = new User();
+		user.setId(obj.getId());
+		user.setPassword(obj.getPassword());
+		return user;
 	}
 
 	public static UserSpringSecurity authenticated() {
